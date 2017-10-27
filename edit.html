@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>angular edit</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+
+	<table ng-repeat="data in employees">
+		<tr>
+			<th>S.NO</th>
+			<th>FirstName</th>
+		</tr>
+		<tr>
+			<td>{{$index+1}}</td>
+			<td ng-click="showemplist(data)"><a href="">{{data.FirstName}}</a></td> <!-- adding click functionality here -->
+			<td ng-click="editemplist(data)"><a href="">edit</a></td> 
+			<td  ng-click="deletelist($index)""><a href="">delete</a></td>
+		</tr>
+		</table>
+
+<hr>
+		<div ng-show="showlist">       <!-- click on user this show method will show remaning labels -->
+			<table border="0">
+				<tr>
+					<th>Firstname</th>
+					<th>LastName</th>
+					<th>Surname</th>
+					<th>Phone</th>
+				</tr>
+				<tr>			
+					<td>{{showlist.FirstName}}</td>
+					<td>{{showlist.LastName}}</td>
+					<td>{{showlist.SurName}}</td>
+					<td>{{showlist.phone}}</td>
+				</tr>
+			</table>
+		</div>
+<hr>
+		<div ng-show="editlist">
+			<input ng-model="editlist.FirstName">	<!-- click on edit this show method will show the input field to edit -->	
+		</div>
+
+<hr>
+		<div  class="container">
+			<div class="jumbotron">
+        <label>FirstName:</label>
+        <input type="text" ng-model="new_fname"> <br>
+        <label>LastName:</label>
+        <input type="text" ng-model="new_ln"><br>
+        <label>SurName:</label>
+        <input type="text" ng-model="new_sn"><br>
+        <label>Phone:</label>
+        <input type="number" ng-model="new_phn"><br>
+        <button ng-click="save()">Save</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+	var app =angular.module("myApp",[]);
+	app.controller("myCtrl",function($scope){
+		$scope.employees = [
+		{FirstName:"abcde", LastName:"reddy",SurName:"abcde",phone:123456789},
+		{FirstName:"efghi", LastName:"reddy",SurName:"efhij",phone:123456789},
+		{FirstName:"klmnno", LastName:"reddy",SurName:"klmnno",phone:123456789},
+		{FirstName:"pqrst", LastName:"reddy",SurName:"pqrstyu",phone:123456789},
+		{FirstName:"uvwxy", LastName:"reddy",SurName:"oliuunn",phone:123456789},		
+		];
+
+		$scope.showemplist=function(data){
+		$scope.showlist=data;
+		}
+
+		$scope.editemplist=function(data){
+			$scope.editlist=data;
+		}
+
+		$scope.deletelist = function(index){
+		$scope.employees.splice( index,1);
+		}
+
+		$scope.save = function(){
+		    $scope.employees.push({
+		      FirstName: $scope.new_fname,
+		      LastName: $scope.new_ln,
+		      SurName:$scope.new_sn,
+		      phone: $scope.new_phn
+		    });
+		  
+		    $scope.new_fname = "";
+		       $scope.new_ln = "";
+		       $scope.new_sn = "";
+		       $scope.new_phn = ""
+		   };
+
+	});
+</script>
+
+</body>
+</html>
